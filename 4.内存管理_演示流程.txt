@@ -1,0 +1,62 @@
+（3）内存类命令（每个2分，共8个，16分）
+alloc – 手工申请一块指定大小的内存（用于模拟内核分配）
+free_mem – 手工释放一块已分配的内存
+show_mem – 显示当前内存分区使用情况（空闲块链表+已分配块列表）
+compact – 执行内存紧缩，合并相邻空闲分区
+mem_stat – 统计内存碎片率、空闲总量等
+set_alloc_algo – 切换分配算法（首次适应/最佳适应/最坏适应）
+pgfault – 模拟一次缺页中断（可仅打印提示）
+swap_out – 将某进程的部分内存标记为换出（不计入实际磁盘读写）
+
+
+
+阶段 1：初始状态 + 基础分配（覆盖alloc/show_mem/mem_stat）
+操作：show_mem
+
+操作：mem_stat
+
+操作：alloc 100 → alloc 200 → alloc 150 → alloc 50
+
+操作：show_mem
+
+操作：alloc 500（申请超过剩余连续空间）
+
+
+阶段 2：制造碎片（覆盖free_mem/show_mem/mem_stat）
+操作：free_mem <addr1> → free_mem <addr3>（释放中间两块）
+
+操作：show_mem
+
+操作：mem_stat
+
+
+阶段 3：紧缩消除碎片（覆盖compact/show_mem/mem_stat）
+操作：compact
+
+操作：show_mem
+
+操作：mem_stat
+
+
+阶段 4：分配算法对比（覆盖set_alloc_algo/alloc/show_mem）
+
+操作：free_mem 64，free_mem 264
+alloc 200 -> alloc 50 -> alloc 100 -> alloc 200 -> alloc 50 -> alloc 120
+
+free 50, 200 以及 120
+
+然后再转换算法去搞。
+
+
+
+阶段 5：虚拟内存相关（覆盖pgfault/swap_out/show_mem）
+
+
+操作：pgfault
+
+操作：swap_out <pid>（指定一个已分配的进程 PID）
+
+操作：show_mem
+
+
+

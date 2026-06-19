@@ -1,0 +1,71 @@
+二、进程管理
+
+（1）进程类命令（每个2分，共10个，20分）
+create_pcb – 创建进程
+kill_pcb – 撤销进程
+block_pcb – 阻塞进程
+wakeup_pcb – 唤醒进程
+show_pcb – 查看单个PCB详细信息
+list_pcb – 列出所有进程及状态
+ptree – 以树形结构显示进程父子关系
+suspend – 挂起进程（从调度队列移出）
+resume – 恢复挂起进程
+renice – 修改进程优先级
+
+
+
+
+2.1创建进程create_pcb 
+ppt要求
+首次创建自动生成init(PID = 1, Prio = 0)
+新进程进入MLFQ就绪队列
+owner为当前登录用户
+
+输入
+create_pcb p1 3
+create_pcb p2 5
+create_pcb p3 8
+
+接着输入overview就可以查看多级反馈队列的结构。
+
+2.2进程阻塞pcb_blocked
+
+输入block_pcb 2
+show_pcb 2
+wakeup_pcb 2
+show_pcb 2
+
+2.3进程挂起
+输入suspend 3
+show_pcb 3
+resume 3
+show_pcb 3
+
+2.4
+list_pcb
+
+2.5
+ptree
+
+2.6更改优先级
+
+renice 2 8
+show_pcb 2
+overview
+
+2.7删除pcb
+kill_pcb 2
+kill_pcb 3
+kill_pcb 4
+overview
+
+
+
+
+
+
+
+
+
+
+
